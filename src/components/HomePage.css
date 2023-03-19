@@ -1,0 +1,42 @@
+.home-page-container {
+  margin-top: 5rem;
+  background-color: #f7f7f7;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #888;
+}
+
+.home-page-heading {
+  color: #444;
+  font-size: 40px;
+  margin-bottom: 10px;
+  padding: 10px 13rem;
+}
+
+.home-page-subheading {
+  color: #777;
+  font-size: 20px;
+  margin-bottom: 30px;
+  padding: 10px 15rem;
+}
+
+.home-page-button {
+  background-color: #5bc0de;
+  border: none;
+  border-radius: 20px;
+  padding: 15px 30px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.home-page-button:hover {
+  background-color: #31b0d5;
+}
+
+.home-page-link {
+  color: #fff;
+  text-decoration: none;
+}

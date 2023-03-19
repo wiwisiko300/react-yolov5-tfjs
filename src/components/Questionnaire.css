@@ -1,0 +1,74 @@
+.assessment-form-container {
+  max-width: 800px;
+  margin: 5rem auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.assessment-form-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #000;
+}
+
+.assessment-form-questions {
+  margin-bottom: 20px;
+}
+
+.assessment-form-question {
+  margin-bottom: 20px;
+}
+
+.assessment-form-question-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.assessment-form-options {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.assessment-form-option {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.assessment-form-option input[type="radio"] {
+  margin-right: 5px;
+}
+
+.assessment-form-submit {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #5bc0de;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.assessment-form-submit:hover {
+  background-color: #5bc0de;
+}
+
+.assessment-form-score {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+}
