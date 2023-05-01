@@ -1,7 +1,7 @@
 import labels from "./labels.json";
+import deep from "../audios/deep.mp3";
 
-
-
+const beep = new Audio(deep);
 /**
  * Render prediction boxes
  * @param {React.MutableRefObject} canvasRef canvas tag reference
@@ -10,24 +10,27 @@ import labels from "./labels.json";
  * @param {Array} scores_data scores array
  * @param {Array} classes_data class array
  */
-export const renderBoxes = (canvasRef, threshold, boxes_data, scores_data, classes_data) => {
+export const renderBoxes = (
+  canvasRef,
+  threshold,
+  boxes_data,
+  scores_data,
+  classes_data,
+  foundBox = false
+) => {
   const ctx = canvasRef.current.getContext("2d");
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // clean canvas
-  
 
   // font configs
   const font = "18px sans-serif";
   ctx.font = font;
   ctx.textBaseline = "top";
- 
+
   for (let i = 0; i < scores_data.length; ++i) {
     if (scores_data[i] > threshold) {
+      foundBox = true;
       const klass = labels[classes_data[i]];
       const score = (scores_data[i] * 100).toFixed(1);
-
-      // console.log(klass + score);
-      
-   
 
       let [x1, y1, x2, y2] = boxes_data.slice(i * 4, (i + 1) * 4);
       x1 *= canvasRef.current.width;
@@ -41,19 +44,29 @@ export const renderBoxes = (canvasRef, threshold, boxes_data, scores_data, class
       ctx.strokeStyle = "#00FF00";
       ctx.lineWidth = 2;
       ctx.strokeRect(x1, y1, width, height);
-      
 
       // Draw the label background.
       ctx.fillStyle = "#00FF00";
       const textWidth = ctx.measureText(klass + " - " + score + "%").width;
-      const textHeight = parseInt(font, 10); // base 10
-      ctx.fillRect(x1 - 1, y1 - (textHeight + 2), textWidth + 2, textHeight + 2);
-      
+      const textHeight = parseInt(font, 10);
+      ctx.fillRect(
+        x1 - 1,
+        y1 - (textHeight + 2),
+        textWidth + 2,
+        textHeight + 2
+      );
 
       // Draw labels
       ctx.fillStyle = "#ffffff";
       ctx.fillText(klass + " - " + score + "%", x1 - 1, y1 - (textHeight + 2));
-
     }
+  }
+
+  // If no box is found, play a sound
+  if (!foundBox) {
+    beep.play();
+  } else {
+    beep.pause();
+    beep.currentTime = 0;
   }
 };

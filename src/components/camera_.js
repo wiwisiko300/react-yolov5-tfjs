@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import Loaders from "./loader"; // import the Loader component from the appropriate file
 import "../style/loader.css";
 import "../style/App.css";
+import beep from "../audios/deep.mp3";
 
 export default function camera_({
   loading,
@@ -48,13 +49,14 @@ export default function camera_({
             <td style={{ fontSize: "20px", fontWeight: "bold" }}> : </td>
             <td style={{ fontSize: "20px" }}> {score}%</td>
           </tr>
-          <tr style={{ width: "50%" }}>
-            <td style={{ fontSize: "20px", fontWeight: "bold" }}>
-              คะแนนแบบประเมิน
+
+          {/* <tr style={{ width: "50%" }}>
+            <td style={{ fontSize: "24px", fontWeight: "bold", color: "red" }}>
+              {message}
             </td>
             <td style={{ fontSize: "20px", fontWeight: "bold" }}> : </td>
             <td style={{ fontSize: "20px" }}> {newScore}%</td>
-          </tr>
+          </tr> */}
         </table>
       </div>
     </div>
