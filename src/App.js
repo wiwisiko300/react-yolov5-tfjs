@@ -23,9 +23,19 @@ const App = () => {
   const location = useLocation();
   const newScore = new URLSearchParams(location.search).get("newScore");
 
+  const [capturedImage, setCapturedImage] = useState("");
+
   // configs
   const modelName = "yolov5n";
   const threshold = 0.25;
+
+  const takeSnapshot = () => {
+    const context = canvasRef.current.getContext("2d");
+    context.drawImage(videoRef.current, 0, 0, 640, 480);
+    const imageUrl = canvasRef.current.toDataURL();
+    console.log(imageUrl);
+    setCapturedImage(imageUrl);
+  };
 
   /**
    * Function to detect every frame loaded from webcam in video tag.
@@ -91,12 +101,16 @@ const App = () => {
 
   useEffect(() => {
     if (NormalEye.length > 50) {
+      takeSnapshot();
       const NormalEyeString = JSON.stringify(NormalEye);
-      navigate(`/Conclusion?NormalEye=${NormalEyeString}&newScore=${newScore}`);
+      navigate(
+        `/Conclusion?NormalEye=${NormalEyeString}&newScore=${newScore}&capturedImage=${capturedImage}`
+      );
     } else if (CataractEye.length > 50) {
+      takeSnapshot();
       const CataractEyeString = JSON.stringify(CataractEye);
       navigate(
-        `/Conclusion?CataractEye=${CataractEyeString}&newScore=${newScore}`
+        `/Conclusion?CataractEye=${CataractEyeString}&newScore=${newScore}&capturedImage=${capturedImage}`
       );
     }
   }, [NormalEye, CataractEye]);

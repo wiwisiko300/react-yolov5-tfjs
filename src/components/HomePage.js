@@ -9,6 +9,7 @@ import SiImg3 from "../img/si-img-3.jpeg";
 import SiImg4 from "../img/si-img-4.png";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
+import { Card, Image } from "antd";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -75,13 +76,20 @@ export default function HomePage() {
               className={active === 2 ? "active" : ""}
               onClick={() => handleItemClick(2)}
             >
-              ข้อมูลสุขภาพ
+              <a
+                href="#health"
+                style={{ textDecoration: "none", color: "#000" }}
+              >
+                ข้อมูลสุขภาพ
+              </a>
             </li>
             <li
               className={active === 3 ? "active" : ""}
               onClick={() => handleItemClick(3)}
             >
-              เกี่ยวกับเรา
+              <a href="#cccc" style={{ textDecoration: "none", color: "#000" }}>
+                เกี่ยวกับเรา
+              </a>
             </li>
           </ul>
         </div>
@@ -133,6 +141,7 @@ export default function HomePage() {
           <img src={bg} alt="Loading..." />
         </div>
       </div>
+
       <div
         id="information"
         style={{
@@ -142,12 +151,110 @@ export default function HomePage() {
           marginTop: "100px",
         }}
       >
+        <h1 style={{ padding: "20px" }}>ข้อมูลโรคต้อ</h1>
         <AliceCarousel
           mouseTracking
           items={items}
           responsive={responsive}
           // controlsStrategy="alternate"
         />
+      </div>
+
+      <div id="health" style={{ padding: "30px" }}>
+        <h1 style={{ marginBottom: "30px" }}>ข้อมูลสุขภาพ</h1>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <Card
+            title="ข้อมูลการดูแลรักษาโรคต้อหิน"
+            extra={<a href="https://bangpo-hospital.com/glaucoma/">View</a>}
+            style={{ width: 600, height: 500, textAlign: "center" }}
+          >
+            <Image
+              width={350}
+              height={250}
+              src="https://bangpo-hospital.com/wp-content/uploads/2022/09/%E0%B8%95%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B4%E0%B8%99-370x270-03.jpg"
+            />
+            <p>
+              โรคต้อหินเป็นโรคของดวงตาชนิดหนึ่งซึ่งเกิดจากความเสื่อมของประสาทตา
+              เป็นประสาทที่เชื่อมระหว่างตากับสมอง (Optic Nerve)
+              หรือการที่เส้นประสาทตาถูกทำลาย{" "}
+            </p>
+            <p>
+              สาเหตุมักเกิดจากความดันในลูกตาสูง
+              ทำให้สูญเสียการมองเห็นเพิ่มขึ้นเรื่อยๆ โดยเริ่มจากบริเวณรอบนอกก่อน
+              แต่ยังสามารถเห็นวัตถุที่วางอยู่ตรงหน้าได้ชัดเจน
+              แต่จะมองไม่เห็นวัตถุที่อยู่ด้านข้าง{" "}
+            </p>
+            <p>
+              เมื่อมีอาการมากขึ้น การมองเห็นก็จะค่อยๆแคบลงและตาบอดในที่สุด
+              สามารถเกิดได้กับทุกเพศทุกวัย โดยเฉพาะผู้ที่มีอายุ 40 ปีขึ้นไป
+            </p>
+          </Card>
+          <Card
+            title="ข้อมูลการดูแลรักษาโรคต้อกระจก"
+            extra={
+              <a href="https://www.sikarin.com/doctor-articles/%E0%B8%A3%E0%B8%B9%E0%B9%89%E0%B8%97%E0%B8%B1%E0%B8%99-%E0%B8%95%E0%B9%89%E0%B8%AD%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%81-%E0%B8%AD%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3-%E0%B8%AA%E0%B8%B2">
+                View
+              </a>
+            }
+            style={{ width: 600, height: 500, textAlign: "center" }}
+          >
+            <Image
+              width={350}
+              height={250}
+              src="https://storage.yanhee.co.th/uploads/2022/01/Cataract-1200.jpg"
+            />
+            <p>
+              “ต้อกระจก (Cataract)” เป็นภาวะที่เลนส์ภายในลูกตามีความขุ่นขาว
+              จึงทำให้แสงที่จะผ่านเข้าไปในดวงตาไม่สามารถผ่านเข้าไปได้
+              ทำให้เกิดอาการตามัว มองเห็นภาพเบลอ สีเพี้ยน
+              และมองเห็นคล้ายมีหมอกมาบังตลอดเวลา
+            </p>
+          </Card>
+        </div>
+      </div>
+
+      <h2 style={{ padding: "20px" }}>ผู้จัดทำ</h2>
+      <div
+        style={{
+          width: "100%",
+          height: "10vh",
+          background: "#2699fb",
+          fontSize: "12px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          color: "#ffff",
+        }}
+        id="cccc"
+      >
+        <div style={{ display: "flex", marginLeft: "10px" }}>
+          <div>รายชื่อผู้จัดทำโครงการ</div>
+          <div style={{ marginLeft: "5px" }}>
+            1.นายอภิรักษ์ นามรักษ์ <br />
+            2.นายบุณยวัทน์ บุญห่อ
+          </div>
+        </div>
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: "5px" }}>สถานศึกษา</div>
+          <div>
+            มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ วิทยาเขตปราจีนบุรี
+            <div>
+              <div>
+                <span style={{ marginRight: "5px" }}>ที่อยู่</span>
+                <span>
+                  129 หมู่ 21 ตำบลเนินหอม อำเภอเมือง จังหวัดปราจีนบุรี 25230.
+                  โทร 0-3721-7300-9
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/th/thumb/b/be/Seal_of_KMUTNB.svg/1200px-Seal_of_KMUTNB.svg.png"
+            width={50}
+          />
+        </div>
       </div>
     </div>
   );

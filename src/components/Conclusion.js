@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Conclusion.css";
 import html2pdf from "html2pdf.js";
+import { Image } from "antd";
 
 export default function Conclusion() {
   const [getScores, setGetScores] = useState();
@@ -17,6 +18,7 @@ export default function Conclusion() {
   const CataractEyeString = params.get("CataractEye");
   const CataractEye = JSON.parse(CataractEyeString);
   const newScore = params.get("newScore");
+  const imgs = params.get("capturedImage");
 
   useEffect(() => {
     if (NormalEye !== null) {
@@ -24,9 +26,6 @@ export default function Conclusion() {
       let sum = scores.reduce((acc, x) => acc + x, 0);
       let mean = sum / NormalEye.length;
       let total = (mean * 70) / 100;
-      console.log(total);
-      console.log("===========");
-      console.log(newScore);
       total += parseFloat(newScore);
 
       setText(NormalEye[0].Normal);
@@ -36,9 +35,6 @@ export default function Conclusion() {
       let sum = scores.reduce((acc, x) => acc + x, 0);
       let mean = sum / CataractEye.length;
       let total = (mean * 70) / 100;
-      console.log(total);
-      console.log("===========");
-      console.log(newScore);
       total += parseFloat(newScore);
 
       setText(CataractEye[0].Cataract);
@@ -75,23 +71,70 @@ export default function Conclusion() {
           <div className="conclusion-normal">
             <h1 className="conclusion-message">สายตาของคุณปกติ</h1>
             <p>โปรดรักษาสุขภาพดวงตาของคุณแบบนี้ไว้นะคะ</p>
-            <div className="conclusion-score">{getScores}%</div>
+            <div className="conclusion-score">
+              สายตาของคุณปกติ <span style={{ color: "red" }}>{getScores}%</span>
+            </div>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อหิน{" "}
+              <span style={{ color: "red" }}>{(100 - getScores) / 2}%</span>
+            </div>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อกระจก{" "}
+              <span style={{ color: "red" }}>{(100 - getScores) / 2}%</span>
+            </div>
+
+            <Image width={200} src={`${imgs}`} />
           </div>
         )}
-        {text === "Cataract" && getScores < 70 && (
-          <div className="conclusion-chance">
-            <h1 className="conclusion-message">สายตาของคุณมีโอกาสเสี่ยง</h1>
-            <p>ข้อแนะนำควรไปปรึกษาแพทย์ดวงตาเพื่อความปลอดภัยของตัวคุณเอง</p>
-            <div className="conclusion-score">{getScores}%</div>
+        {text === "Cataract" && getScores > 70 && (
+          <div className="conclusion-cataract">
+            <h1 className="conclusion-message">
+              สายตาของคุณเสี่ยงต่อโรคต้อหิน
+            </h1>
+            <p>โปรดเข้าปรึกษาแพทย์โดยด่วน</p>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อหิน{" "}
+              <span style={{ color: "red" }}>{getScores}%</span>
+            </div>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อกระจก{" "}
+              <span style={{ color: "red" }}>{100 - getScores}%</span>
+            </div>
           </div>
         )}
-        {text === "Cataract" && getScores >= 70 && (
+        {text === "Cataract" && getScores > 60 && getScores <= 70 && (
           <div className="conclusion-cataract">
             <h1 className="conclusion-message">
               สายตาของคุณเสี่ยงต่อโรคต้อกระจก
             </h1>
             <p>โปรดเข้าปรึกษาแพทย์โดยด่วน</p>
-            <div className="conclusion-score">{getScores}%</div>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อกระจก{" "}
+              <span style={{ color: "red" }}>{getScores}%</span>
+            </div>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อหิน{" "}
+              <span style={{ color: "red" }}>{100 - getScores}%</span>
+            </div>
+          </div>
+        )}
+
+        {text === "Cataract" && getScores < 60 && (
+          <div className="conclusion-normal">
+            <h1 className="conclusion-message">
+              โปรดลองใหม่อีกครั้งการตรวจเกินข้อผิดพลาด
+            </h1>
+            <p>
+              โปรดลองใหม่อีกครั้งแล้วนำดวงตามองมาที่กล้องและค้างไว้ประมาณ 5
+              วินาที
+            </p>
+            <div className="conclusion-score">สายตาของคุณปกติ {0}%</div>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อหิน {0}%
+            </div>
+            <div className="conclusion-score">
+              เสี่ยงต่อการเป็นโรคต้อกระจก {0}%
+            </div>
           </div>
         )}
       </div>

@@ -16,6 +16,7 @@ function AssessmentForm() {
 
   const handleSubmit = () => {
     let newScore = 0;
+
     questions.forEach((question) => {
       if (answers[question.id] === "a") {
         newScore += question.points;
@@ -42,6 +43,7 @@ function AssessmentForm() {
                     value={option.id}
                     checked={answers[question.id] === option.id}
                     onChange={() => handleOptionChange(question.id, option.id)}
+                    required
                   />
                   {option.text}
                 </label>

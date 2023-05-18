@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import Loaders from "./loader"; // import the Loader component from the appropriate file
 import "../style/loader.css";
 import "../style/App.css";
-import beep from "../audios/deep.mp3";
 
 export default function camera_({
   loading,
