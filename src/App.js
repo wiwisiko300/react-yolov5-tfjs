@@ -19,6 +19,8 @@ const App = () => {
   const canvasRef = useRef(null);
   const webcam = new Webcam();
 
+  let photoRef = useRef(null);
+
   const navigate = useNavigate();
   const location = useLocation();
   const newScore = new URLSearchParams(location.search).get("newScore");
@@ -30,11 +32,16 @@ const App = () => {
   const threshold = 0.25;
 
   const takeSnapshot = () => {
-    const context = canvasRef.current.getContext("2d");
-    context.drawImage(videoRef.current, 0, 0, 640, 480);
-    const imageUrl = canvasRef.current.toDataURL();
-    console.log(imageUrl);
-    setCapturedImage(imageUrl);
+    let width = 300;
+    let height = width / (16 / 9);
+
+    let photo = photoRef.current;
+    let video = videoRef.current;
+
+    photo.width = width;
+    photo.height = height;
+    let cxt = photo.getContext("2d");
+    cxt.drawImage(video, 0, 0, photo.width, photo.height);
   };
 
   /**
@@ -103,14 +110,20 @@ const App = () => {
     if (NormalEye.length > 50) {
       takeSnapshot();
       const NormalEyeString = JSON.stringify(NormalEye);
+      const capturedImage = photoRef.current.toDataURL(); // Get the captured image as a data URL
       navigate(
-        `/Conclusion?NormalEye=${NormalEyeString}&newScore=${newScore}&capturedImage=${capturedImage}`
+        `/Conclusion?NormalEye=${NormalEyeString}&newScore=${newScore}&capturedImage=${encodeURIComponent(
+          capturedImage
+        )}`
       );
     } else if (CataractEye.length > 50) {
       takeSnapshot();
       const CataractEyeString = JSON.stringify(CataractEye);
+      const capturedImage = photoRef.current.toDataURL(); // Get the captured image as a data URL
       navigate(
-        `/Conclusion?CataractEye=${CataractEyeString}&newScore=${newScore}&capturedImage=${capturedImage}`
+        `/Conclusion?CataractEye=${CataractEyeString}&newScore=${newScore}&capturedImage=${encodeURIComponent(
+          capturedImage
+        )}`
       );
     }
   }, [NormalEye, CataractEye]);
@@ -147,6 +160,9 @@ const App = () => {
         score={score}
         newScore={newScore}
       />
+      {/* <button onClick={takeSnapshot}>Save</button> */}
+      {}
+      <canvas ref={photoRef}></canvas>
     </div>
   );
 };

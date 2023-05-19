@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Conclusion.css";
 import html2pdf from "html2pdf.js";
-import { Image } from "antd";
 
 export default function Conclusion() {
   const [getScores, setGetScores] = useState();
@@ -18,7 +17,16 @@ export default function Conclusion() {
   const CataractEyeString = params.get("CataractEye");
   const CataractEye = JSON.parse(CataractEyeString);
   const newScore = params.get("newScore");
-  const imgs = params.get("capturedImage");
+
+  const photoRef = useRef(null);
+
+  const capturedImage = decodeURIComponent(
+    location.search
+      .slice(1)
+      .split("&")
+      .find((param) => param.startsWith("capturedImage="))
+      .split("=")[1]
+  );
 
   useEffect(() => {
     if (NormalEye !== null) {
@@ -41,6 +49,18 @@ export default function Conclusion() {
       setGetScores(total.toFixed(2));
     }
   }, [NormalEye, CataractEye]);
+
+  useEffect(() => {
+    const image = new Image();
+    image.onload = () => {
+      const canvas = photoRef.current;
+      const context = canvas.getContext("2d");
+      canvas.width = image.width;
+      canvas.height = image.height;
+      context.drawImage(image, 0, 0);
+    };
+    image.src = capturedImage;
+  }, [capturedImage]);
 
   const OnTry = () => {
     setText("");
@@ -82,8 +102,9 @@ export default function Conclusion() {
               เสี่ยงต่อการเป็นโรคต้อกระจก{" "}
               <span style={{ color: "red" }}>{(100 - getScores) / 2}%</span>
             </div>
-
-            <Image width={200} src={`${imgs}`} />
+            <div style={{ marginTop: "20px" }}>
+              <canvas ref={photoRef}></canvas>
+            </div>
           </div>
         )}
         {text === "Cataract" && getScores > 70 && (
@@ -100,6 +121,8 @@ export default function Conclusion() {
               เสี่ยงต่อการเป็นโรคต้อกระจก{" "}
               <span style={{ color: "red" }}>{100 - getScores}%</span>
             </div>
+
+            <canvas ref={photoRef}></canvas>
           </div>
         )}
         {text === "Cataract" && getScores > 60 && getScores <= 70 && (
@@ -116,6 +139,8 @@ export default function Conclusion() {
               เสี่ยงต่อการเป็นโรคต้อหิน{" "}
               <span style={{ color: "red" }}>{100 - getScores}%</span>
             </div>
+
+            <canvas ref={photoRef}></canvas>
           </div>
         )}
 
